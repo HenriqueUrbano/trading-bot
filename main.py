@@ -21,11 +21,12 @@ counter = 0
 for i in symbols:
     x = urllib.request.urlopen(api + "?symbol=" + i).read()
     json_data = json.loads(x)
-    result = float(json_data['price']) - avgprices[counter]
+    result = 100 - ((avgprices[counter] * 100) / float(json_data['price']))
     if result > 0:
-        profit = "Lucro!"
+        profit = "Lucro de " + str(result) + "% \n"
     else:
-        profit = "Prejuízo!"
-    print(json_data['symbol'] + ' Price: ' + json_data['price'])
+        profit = "Prejuízo de " + str(result) + "% \n"
+    print(json_data['symbol'] + ' Preço atual: ' + json_data['price'])
+    print("Preço Médio pago: " + str(avgprices[counter]))
     print("Resultado = " + profit)
     counter = counter + 1
